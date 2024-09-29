@@ -1,0 +1,56 @@
+services:
+
+  nginx:
+    image: nginx:latest
+    restart: always
+    container_name: web
+    depends_on:
+      - react
+      - yii2    
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./certs:/etc/nginx/certs
+
+  react:
+    build: ./react
+    restart: always
+    container_name: react
+    depends_on:
+      - yii2    
+    volumes:
+      - ./react:/app
+      - /app/node_modules
+
+  yii2:
+    image: yiisoftware/yii2-php:8.3-fpm-nginx
+    restart: always
+    container_name: yii2
+    depends_on:
+      - db    
+    volumes:
+      - ./yii2/app:/app:delegated
+
+  db:
+    image: mysql:latest
+    restart: always
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: dbase
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    container_name: phpmyadmin
+    environment:
+      - PMA_HOST=db
+      - PMA_ABSOLUTE_URI=https://vv.opsteam.space/myphp
+    depends_on:
+      - db
