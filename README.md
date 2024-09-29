@@ -25,10 +25,10 @@ But you should install as you wish
 #### Customize yii2
 edit `./yii2/app/basic/config/web.php`
 
-###Access to db
+### Access to db
 You could use phpmyadmin (https://vv.opsteam.space/myphp/)
 
 ### Urls
-https://vv.opsteam.space/
-https://vv.opsteam.space/api/
-https://vv.opsteam.space/myphp/
+ - https://vv.opsteam.space/
+ - https://vv.opsteam.space/api/
+ - https://vv.opsteam.space/myphp/
